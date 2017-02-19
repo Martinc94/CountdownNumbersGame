@@ -37,6 +37,21 @@ ll
 ;show answered list
 l
 
+;Method that take in Target nember and list of possible numbers
+(define (solvecount target listNum)
+  (computeTwo (car listNum) (car (cdr listNum))))
 
+(define (computeTwo a b)
+  (list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
+
+
+
+
+
+
+;test method solveCount
+(solvecount 123 (list 2 3))
+(solvecount 123 (list 3 3))
+(solvecount 123 (list 34 83))
 
 
