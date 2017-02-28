@@ -2,7 +2,7 @@
 *~
 \#*
 .\#*
-.bak
+*.bak
 
 # Compiled racket bytecode
 compiled
