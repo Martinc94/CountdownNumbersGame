@@ -7,7 +7,7 @@
 
 ;Rules
 ;Target Number: 101 - 999
-;list of 6 numbers: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 25, 50, 75, 100]
+;list of valid numbers to choose from: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 25, 50, 75, 100]
 
 ; VARIABLE DEFINITIONS //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,7 +30,10 @@
       ;if invalid return message
       (write "Target Number isnt withing the range 101-999")
       ;if valid pass to next method
-      (solve target listNum)))
+      (if (= (validNumbers listNum) 1)
+          ;if valid list pass to solve
+          (solve target listNum)
+          (write "Invavid List"))))
 
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
 ;returns target if target is within Range of max min else returns 0
@@ -42,25 +45,42 @@
           target)))
 
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
+;Checks if list has 6 numbers and list is composed from set of valid numbers
+(define (validNumbers listNum)
+  ;check if list has 6 numbers
+  (if (= (length listNum) 6)
+      ;check if list numbers are valid (no duplicate unless allowed on list twice)
+      (isValidList listNum possibleNumList)
+      ;return 0 if not 6 nums in list
+      0))
+
+;//////////////////////////////////////////////////////////////////////////////////////////////////////
+;Checks if given List is valid
+(define (isValidList listNum posList)
+  (if (null? listNum)
+      1
+      ;check if number is on list
+      (if (member (car listNum) posList)
+          ;recurse with rest of list and remove of possible list 
+         (isValidList (cdr listNum)(remove (car listNum) posList))
+         ;return 0 if num not in poslist
+         0)))
+
+;//////////////////////////////////////////////////////////////////////////////////////////////////////
 ;
 (define (solve target listNum)
-  ;temp return target until implemented
-  target)
+  (write "generate all combinations"))
 
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-;METHOD CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////
+;TEST METHODS//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 ;test method solveCount
-(solvecount 123  (list 1 2 3 4 5 6))
-(solvecount 1230 (list 1 2 3 4 5 6))
+(solvecount 125 (list 1 2 3 4 5 6))
 
-;test method solveCount
-;t(solve 123 (list 2 2))
+;test method solve
+;(solve 125 (list 1 2 3 4 5 6))
 
 
 
