@@ -5,46 +5,106 @@
 ;Fourth Year Project For Theory of Algorithms Module
 ;Info here about script
 
+;Rules
 ;Target Number: 101 - 999
 ;list of 6 numbers: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 25, 50, 75, 100]
 
-;operations
+; VARIABLE DEFINITIONS //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+;Defines a list of all valid operations(+-*/)
 (define ops '(+ - * /))
 
+;All possible numbers that can be in 6 number list
+(define possibleNumList (list 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 25 50 75 100))
+;Min target number
+(define minTarget 101)
+;Max target number
+(define maxTarget 999)
+
+;METHOD DEFINITIONS //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+;Method that take in Target nember and list of possible numbers
+(define (solvecount target listNum)
+  ;if checks if target number is valid
+  (if (= (targetWithinRange target) 0)
+      ;if invalid return message
+      (write "Target Number isnt withing the range 101-999")
+      ;if valid pass to next method
+      (solve target listNum)))
+
+;//////////////////////////////////////////////////////////////////////////////////////////////////////
+;returns target if target is within Range of max min else returns 0
+(define (targetWithinRange target)
+  (if (<= target minTarget)
+      0
+      (if (>= target maxTarget)
+          0
+          target)))
+
+;//////////////////////////////////////////////////////////////////////////////////////////////////////
+;
+(define (solve target listNum)
+  ;temp return target until implemented
+  target)
+
+;//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+;METHOD CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+;test method solveCount
+(solvecount 123  (list 1 2 3 4 5 6))
+(solvecount 1230 (list 1 2 3 4 5 6))
+
+;test method solveCount
+;t(solve 123 (list 2 2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;Rough work //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ;temp values for testing
-(define a 5)
-(define b 25)
-(define target 125)
+;(define a 5)
+;(define b 25)
+;(define target 125)
+
 
 ;all possibilities for 2 num list
-;(+ a b)
-;(- a b)
-;(* a b)
-;(/ a b)
-;(+ b a)
-;(- b a)
-;(* b a)
-;(/ b a)
+;(+ a b)(- a b)(* a b)(/ a b)(+ b a)(- b a)(* b a)(/ b a)
 
-;list of all possibilities
+;defined list of all 2 num possibilities
 ;(define l (list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
 
+;defined list of all 2 num possibilities with quote
 ;(define ll '( (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
 
-;show all possibilities
+;show list of all possibilities
 ;ll
 
 ;show answered list
 ;l
 
-;Method that take in Target nember and list of possible numbers
-(define (solvecount target listNum)
-  (computeTwo (car listNum) (cadr listNum)))
-
-
-(define (computeTwo a b)
-  (list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
+;(define (computeTwo a b)(list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
 
 ;all possible operations on two numbers
 ;(computeTwo 1 2)
@@ -63,8 +123,8 @@
 
 ;(cartesian-product '(+ - * /) '(1 2 3) '(4 5 6))
 
-(define (plus l)
-  (+ (car l)(cadr l)))
+;(define (plus l)
+;  (+ (car l)(cadr l)))
 
 ;(map plus (combinations (list 1 2 3 4 5 6 )2))
 
@@ -82,41 +142,32 @@
 ;(cartesian-product (permutations '(a b)) '(+ - * /))
 
 ;gets all possibilities for 2
-(define (allPos l)
-  (cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /)))
+;(define (allPos l)
+ ; (cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /)))
 
-(allPos (list 1 2 3 4))
+;(allPos (list 1 2 3 4))
 
+;(cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /))
 
-  
+;(cartesian-product (permutations (list (cadr l) (cadr (cdr l)))) '(+ - * /))
 
+;(define (my-length lst)
+  ; local function iter:
+ ; (define (iter lst result)
+ ;   (cond
+ ;    [(empty? lst) result]
+ ;    [else (iter (cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /)) (+ result 1))]))
+  ; body of my-length calls iter:
+  ;(iter lst 0))
 
+;(my-length l)
 
+;(define (allPos2 l)
+ ; (cartesian-product  (list(car l )) (list (car l) (cadr l)) '(+ - * /)
+                   ;   (list(car l)) (list (car l) (cadr l)) '(+ - * /)
+                   ;   (list(car l)) (list (car l) (cadr l)) '(+ - * /)
 
+                   ;  ))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+;(allPos2 (list 1 2 3 4))
 
