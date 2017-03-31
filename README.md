@@ -38,4 +38,10 @@ solvecount is method name.
 I used GitHub for managing the projects source control and issue tracking.
 
 ### Problem Solving
-My first attempt at solving this problem was to ...
+My first attempt at solving this problem was to solve a list containing all permitations of two numbers.
+
+(define (computeTwo a b) (list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
+
+Then i attempted to generate all the possibilities of number and operators using cartesian product and permutations and various other methods.
+
+(cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /))
