@@ -77,10 +77,62 @@
 
 
 ;test method solveCount
-(solvecount 125 (list 1 2 3 4 5 6))
+;(solvecount 125 (list 1 2 3 4 5 6))
 
 ;test method solve
 ;(solve 125 (list 1 2 3 4 5 6))
+
+
+
+
+
+; -1 represents an operator
+;  1 represents a number
+(define start-perm (list -1 -1 -1 -1 1 1 1 1))
+
+;gets all permiations of a list
+;removes dublicates from list 
+(define rpnList (remove-duplicates (permutations start-perm)))
+
+;add 2 numbers to the start and operator to the end of list as valid rpn requires
+(define (make-rpn l)
+  (append (list 1 1) l (list -1)))
+
+;append to all of list
+(map make-rpn rpnList)
+
+;e is element/expression
+;s is stack
+;checks if rpn is valid
+(define (valid-rpn? e [s 0])
+  (if (null? e)
+      ;if 1 on stack true else false
+     (if(= s 1) #t #f)
+     (if (= (car e) 1)
+         (valid-rpn? (cdr e)(+ 1 s));Add one to stack
+         ;
+         (valid-rpn? (cdr e)(- 1 s));should be an operator stack has 2 remove from stack
+         )))
+
+;makes a map of all valid rpn
+(map valid-rpn? (map make-rpn rpnList))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
