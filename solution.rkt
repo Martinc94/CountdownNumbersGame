@@ -99,7 +99,8 @@
   (append (list 1 1) l (list -1)))
 
 ;append to all of list
-;(map make-rpn rpnList)
+(define appendedList (map make-rpn rpnList))
+
 
 ;e is element/expression
 ;s is stack
@@ -116,18 +117,14 @@
          ))))        
 
 ;makes a true or false list of all valid rpn
-(define validList (map valid-rpn? (map make-rpn rpnList)))
+;(define validList (map valid-rpn? (map make-rpn rpnList)))
 
-validList
+;validList
 
+;filters list of true false with the appendedlist of rpn to produce list of ValidRPN(42)
+(define validRPNList (filter (lambda(validList) (equal? (valid-rpn? validList)#t)) appendedList))
 
-
-
-
-
-
-
-
+validRPNList
 
 
 
