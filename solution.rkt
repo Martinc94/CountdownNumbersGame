@@ -99,37 +99,26 @@
   (append (list 1 1) l (list -1)))
 
 ;append to all of list
-(map make-rpn rpnList)
+;(map make-rpn rpnList)
 
 ;e is element/expression
 ;s is stack
 ;checks if rpn is valid
 (define (valid-rpn? e [s 0])
   (if (null? e)
-      ;if 1 on stack true else false
+      ;if list is null and 1 on stack return true as is valid else false
      (if(= s 1) #t #f)
      (if (= (car e) 1)
-         (valid-rpn? (cdr e)(+ 1 s));Add one to stack
-         ;
-         (valid-rpn? (cdr e)(- 1 s));should be an operator stack has 2 remove from stack
-         )))
+         (valid-rpn? (cdr e)(+ 1 s));Operator add one to stack
+         (if (<(- s 1) 1);if stack is less than 1
+          #f ;return false
+         (valid-rpn? (cdr e)(- s 1)); should be an operator remove one from stack
+         ))))        
 
-;makes a map of all valid rpn
-(map valid-rpn? (map make-rpn rpnList))
+;makes a true or false list of all valid rpn
+(define validList (map valid-rpn? (map make-rpn rpnList)))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+validList
 
 
 
