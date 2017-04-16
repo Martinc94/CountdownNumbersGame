@@ -130,16 +130,50 @@
 ;(length (permutations (list 1 2 3 4 5 6)))
 
 ;All permutations of list
-(define (allNum l)
+(define (allNums l)
   remove-duplicates(permutations l))
 
-;(allNum (list 1 2 3 4 5 6))
+;(allNums (list 1 2 3 4 5 6))
 
 ;Gets list of all possible cartesian products of a 5 operator list from list (+ - * /)
 (define allOps (cartesian-product ops ops ops ops ops))
 
 ;1024 possible cartesian products
 ;(length allOps)
+
+
+;combine allOps and allNums to get 2 lists of 5 ops and 6 nums
+(define (twoList l)
+(cartesian-product allOps (allNums l)))
+
+;(remove-duplicates ((cartesian-product allOps (allNums (list 1 2 3 4 5 6)))))
+
+;using list of same to reduce size
+;(remove-duplicates (cartesian-product allOps (allNums (list 1 1 1 1 1 1))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
