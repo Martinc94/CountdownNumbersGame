@@ -12,7 +12,7 @@
 ; VARIABLE DEFINITIONS //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ;Defines a list of all valid operations(+-*/)
-(define ops '(+ - * /))
+(define ops (list '+ '- '* '/))
 
 ;All possible numbers that can be in 6 number list
 (define possibleNumList (list 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 25 50 75 100))
@@ -135,11 +135,11 @@
 
 ;(allNum (list 1 2 3 4 5 6))
 
+;Gets list of all possible cartesian products of a 5 operator list from list (+ - * /)
+(define allOps (cartesian-product ops ops ops ops ops))
 
-
-
-
-
+;1024 possible cartesian products
+;(length allOps)
 
 
 
