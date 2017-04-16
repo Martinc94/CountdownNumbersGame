@@ -122,9 +122,21 @@
 ;validList
 
 ;filters list of true false with the appendedlist of rpn to produce list of ValidRPN(42)
-(define validRPNList (filter (lambda(validList) (equal? (valid-rpn? validList)#t)) appendedList))
+(define validRPNPatternList (filter (lambda(validList) (equal? (valid-rpn? validList)#t)) appendedList))
 
-validRPNList
+;validRPNPatternList
+
+;720 permutations of list
+;(length (permutations (list 1 2 3 4 5 6)))
+
+;All permutations of list
+(define (allNum l)
+  remove-duplicates(permutations l))
+
+;(allNum (list 1 2 3 4 5 6))
+
+
+
 
 
 
