@@ -141,7 +141,6 @@
 ;1024 possible cartesian products
 ;(length allOps)
 
-
 ;combine allOps and allNums to get 2 lists of 5 ops and 6 nums
 (define (twoList l)
 (cartesian-product allOps (allNums l)))
@@ -160,9 +159,55 @@
 
 
 
+(define (splitList numOpList)
+  (applyRPN (car numOpList) (cdr numOpList) validRPNPatternList))
+
+
+(define (applyRpnToList numOpsList)
+     ;applys pattern to all of list
+     (map (lambda (x) (splitList x)) numOpsList)
+)
 
 
 
+(define (applyRPN numList opList rpnPattern)
+     ;applys pattern to all of list
+     (map (lambda (x) (applyListToPattern numList opList x '()) ) rpnPattern )
+)
+
+(define (appendNumToList lst x)
+  (cond
+    ((null? lst) (cons x '())) ;
+    (else append lst x)))
+
+(define (applyListToPattern numList opList rpnPattern rpnList)
+  (if (= (length rpnList)11) ;until rpn is length 11 
+  rpnList ;return rpn
+  (if(= (car rpnPattern) 1) ;if pattern if 1 its a number else its an operator
+     (applyListToPattern (cdr numList) opList (cdr rpnPattern) (append rpnList (cons(car numList)'()))) ;take one of numList
+     (applyListToPattern numList (cdr opList) (cdr rpnPattern) (append rpnList (cons(car opList)'())))) ;take one of opsList
+  ))
+
+;(splitList '((+ + + + +) (1 1 1 1 1 1)))
+
+;(applyRpnToList twoList)
+
+
+
+
+(define lnumList (list 1 2 3 4 5 6))
+
+(define lopList (list '+ '- '* '/ '-))
+
+(define lrpnPattern '(1 1 1 -1 1 -1 -1 1 -1 1 -1) )
+
+(define lrpnList '() )
+
+;makes rpn statement from given rpn pattern, number list and operator list
+;(applyListToPattern (cdr lnumList) lopList (cdr lrpnPattern) (append lrpnList (cons(car lnumList)'())))
+
+;makes a list of rpn statements from a given patternlist, number and operator list
+;(applyRPN lnumList lopList validRPNPatternList )
 
 
 
