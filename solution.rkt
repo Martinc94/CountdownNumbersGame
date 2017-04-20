@@ -14,6 +14,8 @@
 ;Defines a list of all valid operations(+-*/)
 (define ops (list '+ '- '* '/))
 
+(define ops2 (list + - * /))
+
 ;All possible numbers that can be in 6 number list
 (define possibleNumList (list 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 25 50 75 100))
 ;Min target number
@@ -143,43 +145,34 @@
 
 ;combine allOps and allNums to get 2 lists of 5 ops and 6 nums
 (define (twoList l)
-(cartesian-product allOps (allNums l)))
+(remove-duplicates(cartesian-product allOps (allNums l))))
 
 ;(remove-duplicates ((cartesian-product allOps (allNums (list 1 2 3 4 5 6)))))
 
 ;using list of same to reduce size
-;(remove-duplicates (cartesian-product allOps (allNums (list 1 1 1 1 1 1))))
+;(remove-duplicates (cartesian-product allOps (allNums '(1 1 1 1 1 1))))
 
 
 
 
 
 
-
-
-
-
+;
 (define (splitList numOpList)
-  (applyRPN (car numOpList) (cdr numOpList) validRPNPatternList))
+     (applyRPN (car(cdr numOpList))(car numOpList) validRPNPatternList))
 
-
+;
 (define (applyRpnToList numOpsList)
-     ;applys pattern to all of list
+     ;pass lists of nums and ops to 
      (map (lambda (x) (splitList x)) numOpsList)
-)
+  (map (lambda (x) (splitList x)) (twoList (list 1 1 1 1 1 1))))
 
-
-
+;
 (define (applyRPN numList opList rpnPattern)
      ;applys pattern to all of list
-     (map (lambda (x) (applyListToPattern numList opList x '()) ) rpnPattern )
-)
+     (map (lambda (x) (applyListToPattern numList opList x '()) ) rpnPattern ))
 
-(define (appendNumToList lst x)
-  (cond
-    ((null? lst) (cons x '())) ;
-    (else append lst x)))
-
+;
 (define (applyListToPattern numList opList rpnPattern rpnList)
   (if (= (length rpnList)11) ;until rpn is length 11 
   rpnList ;return rpn
@@ -188,32 +181,21 @@
      (applyListToPattern numList (cdr opList) (cdr rpnPattern) (append rpnList (cons(car opList)'())))) ;take one of opsList
   ))
 
-;(splitList '((+ + + + +) (1 1 1 1 1 1)))
 
-;(applyRpnToList twoList)
+;TEST DATA
+;(define lnumList '(1 1 1 1 1 1))
 
+;(define lopList '( + - * / -))
 
+;(define lrpnPattern '(1 1 1 -1 1 -1 -1 1 -1 1 -1) )
 
-
-(define lnumList (list 1 2 3 4 5 6))
-
-(define lopList (list '+ '- '* '/ '-))
-
-(define lrpnPattern '(1 1 1 -1 1 -1 -1 1 -1 1 -1) )
-
-(define lrpnList '() )
+;(define lrpnList '() )
 
 ;makes rpn statement from given rpn pattern, number list and operator list
 ;(applyListToPattern (cdr lnumList) lopList (cdr lrpnPattern) (append lrpnList (cons(car lnumList)'())))
 
 ;makes a list of rpn statements from a given patternlist, number and operator list
 ;(applyRPN lnumList lopList validRPNPatternList )
-
-
-
-
-
-
 
 
 
