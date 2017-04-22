@@ -73,6 +73,10 @@
 (define (solve target listNum)
   (write "generate all combinations"))
 
+
+
+
+
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ;TEST METHODS//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +85,6 @@
 ;test method solveCount
 ;(solvecount 125 (list 1 2 3 4 5 6))
 
-;test method solve
 ;(solve 125 (list 1 2 3 4 5 6))
 
 
@@ -144,6 +147,9 @@
 ;(length allOps)
 
 ;combine allOps and allNums to get 2 lists of 5 ops and 6 nums
+(define (twoList1 l)
+(cartesian-product allOps (allNums l))) 
+
 (define (twoList l)
 (remove-duplicates(cartesian-product allOps (allNums l))))
 
@@ -157,22 +163,30 @@
 
 
 
-;
+
+
+
+
+
+
+
+
+
+;Passes a list of lists comtaining numbers and operators ('( + - * / -) '(1 2 3 4 5 6)  ('( + - * / -) '(1 2 3 4 5 6))) to a function
+(define (applyRpnToList numOpsList)
+     ;pass lists of nums and ops to 
+     (map (lambda (x) (splitList x)) numOpsList))
+
+;splits up a list consisting of two lists one number, one operator e.g. ('( + - * / -) '(1 2 3 4 5 6)) and passes the split lists to a function
 (define (splitList numOpList)
      (applyRPN (car(cdr numOpList))(car numOpList) validRPNPatternList))
 
-;
-(define (applyRpnToList numOpsList)
-     ;pass lists of nums and ops to 
-     (map (lambda (x) (splitList x)) numOpsList)
-  (map (lambda (x) (splitList x)) (twoList (list 1 1 1 1 1 1))))
-
-;
+;applies pattern to all of the lists - returns a list of lists consisting of valid rpn patterns of lenght 11
 (define (applyRPN numList opList rpnPattern)
      ;applys pattern to all of list
-     (map (lambda (x) (applyListToPattern numList opList x '()) ) rpnPattern ))
+     (map (lambda (x) (applyListToPattern numList opList x '()) ) rpnPattern))
 
-;
+;applies the rpnpattern to single num and ops pair of lists - returns a list of length 11 e.g. (1 2 + 3 - 4 * 5 / 6 -)
 (define (applyListToPattern numList opList rpnPattern rpnList)
   (if (= (length rpnList)11) ;until rpn is length 11 
   rpnList ;return rpn
@@ -183,19 +197,23 @@
 
 
 ;TEST DATA
-;(define lnumList '(1 1 1 1 1 1))
+(define lnumList '(2 2 2 2 2 2))
 
 ;(define lopList '( + - * / -))
-
-;(define lrpnPattern '(1 1 1 -1 1 -1 -1 1 -1 1 -1) )
-
-;(define lrpnList '() )
 
 ;makes rpn statement from given rpn pattern, number list and operator list
 ;(applyListToPattern (cdr lnumList) lopList (cdr lrpnPattern) (append lrpnList (cons(car lnumList)'())))
 
 ;makes a list of rpn statements from a given patternlist, number and operator list
-;(applyRPN lnumList lopList validRPNPatternList )
+;(applyRPN lnumList lopList validRPNPatternList)
+
+
+
+; first list off list of lists
+;(car(applyRpnToList (twoList lnumList)))
+
+;list of lists
+;(applyRpnToList (twoList lnumList))
 
 
 
@@ -206,99 +224,4 @@
 
 
 
-
-
-
-
-
-
-;Rough work //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-;temp values for testing
-;(define a 5)
-;(define b 25)
-;(define target 125)
-
-
-;all possibilities for 2 num list
-;(+ a b)(- a b)(* a b)(/ a b)(+ b a)(- b a)(* b a)(/ b a)
-
-;defined list of all 2 num possibilities
-;(define l (list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
-
-;defined list of all 2 num possibilities with quote
-;(define ll '( (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
-
-;show list of all possibilities
-;ll
-
-;show answered list
-;l
-
-;(define (computeTwo a b)(list (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a)))
-
-;all possible operations on two numbers
-;(computeTwo 1 2)
-
-;test method solveCount
-;(solvecount 123 (list 2 2))
-;(solvecount 123 (list 3 3))
-;(solvecount 123 (list 4 4))
-
-;(permutations '(a b c d + - * /))
-
-;(combinations (list 1 2 3 4 5 6) 2)
-
-; all the possible selections from the original list.
-;(combinations (list 1 2 3 4 5 6))
-
-;(cartesian-product '(+ - * /) '(1 2 3) '(4 5 6))
-
-;(define (plus l)
-;  (+ (car l)(cadr l)))
-
-;(map plus (combinations (list 1 2 3 4 5 6 )2))
-
-;(map plus (combinations (list  (+ a b) (- a b) (* a b) (/ a b) (+ b a) (- b a) (* b a) (/ b a))2))
-
-;(combinations '(a b + - * / )3)
-;(combinations '(c d + - * / )3)
-;(combinations '(e f + - * / )3)
-
-
-;(cartesian-product '(a b c d) '(b c d) '(+ - * /))
-;(cartesian-product '(a b c d) '(b c d) '(c) '(+ - * /))
-
-;all permutations of a list and an operator
-;(cartesian-product (permutations '(a b)) '(+ - * /))
-
-;gets all possibilities for 2
-;(define (allPos l)
- ; (cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /)))
-
-;(allPos (list 1 2 3 4))
-
-;(cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /))
-
-;(cartesian-product (permutations (list (cadr l) (cadr (cdr l)))) '(+ - * /))
-
-;(define (my-length lst)
-  ; local function iter:
- ; (define (iter lst result)
- ;   (cond
- ;    [(empty? lst) result]
- ;    [else (iter (cartesian-product (permutations (list (car l) (cadr l))) '(+ - * /)) (+ result 1))]))
-  ; body of my-length calls iter:
-  ;(iter lst 0))
-
-;(my-length l)
-
-;(define (allPos2 l)
- ; (cartesian-product  (list(car l )) (list (car l) (cadr l)) '(+ - * /)
-                   ;   (list(car l)) (list (car l) (cadr l)) '(+ - * /)
-                   ;   (list(car l)) (list (car l) (cadr l)) '(+ - * /)
-
-                   ;  ))
-
-;(allPos2 (list 1 2 3 4))
 
