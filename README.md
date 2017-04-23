@@ -56,6 +56,8 @@ solvecount is the method name.
 
 The script will return a solution if it can find one.
 
+Note: Script will requires DrRackets memory to be increased.
+
 ### Project Management
 I used GitHub for managing the projects source control and issue tracking.
 
@@ -80,6 +82,8 @@ As I used alot of methods and tested them as the were being created I didnt run 
 
 I have left some of the individual method in the bottom of the script if users wish to see what the individual methods return.
 
+Every step of how the problem was solved is commented throughout the script.
+
 Once I had gained an unstanding of Racket and had wrote on paper in small steps what I had to do I was able to understand the problem better.
 
 ### Possible Improvements
@@ -91,3 +95,4 @@ The script currently returns results in Reverse polish notation, another method 
 1. https://racket-lang.org/
 2. https://cs.stackexchange.com/questions/4666/what-is-the-significance-of-reverse-polish-notation
 3. https://groups.csail.mit.edu/mac/projects/scheme/
+4. https://docs.racket-lang.org/
