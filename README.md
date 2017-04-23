@@ -20,6 +20,10 @@ All Six numbers dont have to be used in calculation.
 
 No negative numbers and fractions.
 
+The problem is much larger and complex than it appears at first glance. The size of all the combinations of all the lists are as follows:
+
+(42 * 720 * 1024) = 30,965,760
+
 ### Countdown 
 Countdown is a Television game show broadcast of Channel 4. It contains a variety of word and number games. The countdown numbers game requires contestants to compute a list of six number to a given target within sixty seconds. The contestant with the correct solution of nearest solution to the target wins.
 
