@@ -14,8 +14,6 @@
 ;Defines a list of all valid operations(+-*/)
 (define ops (list '+ '- '* '/))
 
-(define ops2 (list + - * /))
-
 ;All possible numbers that can be in 6 number list
 (define possibleNumList (list 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 25 50 75 100))
 ;Min target number
@@ -69,35 +67,17 @@
          0)))
 
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
-;
+;when above validation methods are passed evaluation of list can start
 (define (solve target listNum)
-  (write "generate all combinations"))
-
-
-
-
+  (compareListsToTarget target (applyRpnToList (twoList listNum))))
 
 ;//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-;TEST METHODS//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-;test method solveCount
-;(solvecount 125 (list 1 2 3 4 5 6))
-
-;(solve 125 (list 1 2 3 4 5 6))
-
-
-
-
-
-; -1 represents an operator
-;  1 represents a number
+; -1 represents an operator, 1 represents a number
 (define start-perm (list -1 -1 -1 -1 1 1 1 1))
 
-;gets all permiations of a list
-;removes dublicates from list 
-(define rpnList (remove-duplicates (permutations start-perm)))
+;gets all permiations of a list - removes dublicates from list 
+(define rpnList(remove-duplicates (permutations start-perm)))
 
 ;add 2 numbers to the start and operator to the end of list as valid rpn requires
 (define (make-rpn l)
@@ -105,7 +85,6 @@
 
 ;append to all of list
 (define appendedList (map make-rpn rpnList))
-
 
 ;e is element/expression
 ;s is stack
@@ -119,45 +98,22 @@
          (if (<(- s 1) 1);if stack is less than 1
           #f ;return false
          (valid-rpn? (cdr e)(- s 1)); should be an operator remove one from stack
-         ))))        
+))))        
 
-;makes a true or false list of all valid rpn
-;(define validList (map valid-rpn? (map make-rpn rpnList)))
-
-;validList
 
 ;filters list of true false with the appendedlist of rpn to produce list of ValidRPN(42)
 (define validRPNPatternList (filter (lambda(validList) (equal? (valid-rpn? validList)#t)) appendedList))
 
-;validRPNPatternList
-
-;720 permutations of list
-;(length (permutations (list 1 2 3 4 5 6)))
-
-;All permutations of list
+;All permutations of list - 720 permutations
 (define (allNums l)
   remove-duplicates(permutations l))
 
-;(allNums (list 1 2 3 4 5 6))
-
-;Gets list of all possible cartesian products of a 5 operator list from list (+ - * /)
+;Gets list of all possible cartesian products of a 5 operator list from list (+ - * /) - 1024 possible cartesian products
 (define allOps (cartesian-product ops ops ops ops ops))
 
-;1024 possible cartesian products
-;(length allOps)
-
 ;combine allOps and allNums to get 2 lists of 5 ops and 6 nums
-(define (twoList1 l)
-(cartesian-product allOps (allNums l))) 
-
 (define (twoList l)
 (remove-duplicates(cartesian-product allOps (allNums l))))
-
-;TESTING METHODS
-;(remove-duplicates ((cartesian-product allOps (allNums (list 1 2 3 4 5 6)))))
-
-;using list of same to reduce size
-;(remove-duplicates (cartesian-product allOps (allNums '(1 1 1 1 1 1))))
 
 ;Passes a list of lists comtaining numbers and operators ('( + - * / -) '(1 2 3 4 5 6)  ('( + - * / -) '(1 2 3 4 5 6))) to a function
 (define (applyRpnToList numOpsList)
@@ -205,7 +161,9 @@
 
 ;evaluates a list
 (define (performOp operList)
-(eval operList ns))
+  (if (member 0 operList);stop dividing by -0
+   -1
+  (eval operList ns)))
 
 ;combines 3 (op and 2 nums into list)
 (define (makeList op num1 num2)
@@ -215,42 +173,83 @@
 (define (evalRpn rpnLst stack)
   (if (null? rpnLst)
       (if(= (length stack) 1) (car stack) "RPN list empty");if one number left on stack return stack
-      
        ;Check if number or operator
       (if (number? (car rpnLst))
           (evalRpn (cdr rpnLst)(append stack (list(car rpnLst))));Operator add one to stack
-
           (if (< (- (length stack) 1) 1);if length(stack - 1) is less than 1
-           "Invalid List" ;Invalid RPN
-
+           rpnLst ;Invalid RPN
            ;operator pull two nums from stack, apply operator and add to stack
            ;add whats left on stack - stack with last 2 elements removed
            (evalRpn (cdr rpnLst)(append (removeLastTwoElement stack) (list(makeList (car rpnLst)(last_element stack)(secLast_element stack)))))))))
 
+;return true or false if RPN sums to target
+(define (compareToTarget target rpnList)
+   (if(= (evalRpn rpnList '() ) target)
+     target
+     -1))
 
-;Test RPN Evaluator
-;pass in single rpn to be evaluated
-;(evalRpn (car(car(applyRpnToList (twoList lnumList)))) '() )
+;returns the target if given in RPN list
+(define (compareListToTarget target rpnLists)
+  ;if rpnList notNull
+  (if (null? rpnLists)
+      0;if no more list return 0 
+  (if(= (compareToTarget target (car rpnLists)) target)
+     target;if target found return it
+     (compareListToTarget target (cdr rpnLists)));target not found recurse
+  ))
+
+;returns the rpn that sums to target
+(define (returnList target rpnLists)
+  ;if rpnList notNull
+  (if (null? rpnLists)
+      0
+  (if(= (compareToTarget target (car rpnLists)) target)
+     (car rpnLists);return the RPN Pattern
+     (returnList target (cdr rpnLists)));recurse
+  ))
+
+;Compares list of lists to target
+(define (compareListsToTarget target rpnLists)
+  ;if rpnList is Null
+  (if (null? rpnLists)
+      "No Match Found";Target number wasnt found in lists
+  (if(= (compareListToTarget target (car rpnLists)) target)
+     (returnList target (car rpnLists));target was found get the RPN
+     (compareListsToTarget target (cdr rpnLists)));recurse
+  ))
 
 
 
 
 
+;MAIN METHOD//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+;solveCount method
+;Target number must be 101 - 999
+;list can only contain numbers from: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 25, 50, 75, 100]
+
+;Note can take a couple of minutes to run
+
+;(solvecount 120 (list 100 6 5 5 2 2))
+
+;(solvecount 424 (list 100 25 10 2 2 1))
+
+;solve method runs list without validation allows any combination or any target number
+
+;solves faster if list contains duplicates
+
+;(solve 12 (list 2 2 2 2 2 2))
 
 
+;TESTING INDIVIDUAL METHODS////////////////////////////////////////////////////////////////////////////////////////
 
+;makes a true or false list of all valid rpn
+;(define validList (map valid-rpn? (map make-rpn rpnList)))
 
+;(remove-duplicates ((cartesian-product allOps (allNums (list 1 2 3 4 5 6)))))
 
-
-
-
-
-
-
-
-
-
-;TEST DATA FOR INDIVIDUAL METHODS
+;using list of same to reduce size
+;(remove-duplicates (cartesian-product allOps (allNums '(1 1 1 1 1 1))))
 ;(define lnumList '(2 2 2 2 2 2))
 
 ;(define lopList '( + - * / -))
@@ -260,3 +259,17 @@
 
 ;makes a list of rpn statements from a given patternlist, number and operator list
 ;(applyRPN lnumList lopList validRPNPatternList)
+
+;Test RPN Evaluator
+;pass in single rpn to be evaluated
+;(evalRpn (car(car(applyRpnToList (twoList lnumList)))) '() )
+
+;(allNums (list 1 2 3 4 5 6))
+
+;(compareListsToTarget 20 (applyRpnToList (twoList lnumList)))
+
+;(solve 424 (list 100 25 10 2 2 1))
+
+
+
+
