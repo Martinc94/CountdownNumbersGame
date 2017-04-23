@@ -16,6 +16,14 @@ The function must return a combonation of the given numbers and the operators th
 All Six numbers dont have to be used in calculation.
 No negative numbers and fractions.
 
+### Racket
+Racket is a functional programming language.It is a it was heavily infulenced by Lisp and Scheme.
+It works mainly with lists and recursion. More information on racket is available here: https://racket-lang.org/
+
+### Reverse Polish Notation
+Reverse Polish Notation is a mathematical notation where operators follow its operands e.g (1 2 +) represents (1 + 2).
+It works well with computers as it resembles a stack. Computers can read RPN without the use of recursive parsing.
+
 ### How to run:
 1- Download DrRacket from here: https://racket-lang.org/download/
 
@@ -66,3 +74,9 @@ Once I had gained an unstanding of Racket and had wrote on paper in small steps 
 A small adjustment to the script would allow that all the solutions could be mapped and returned instead of printing the first correct method.
 
 The script currently returns results in Reverse polish notation, another method could be used to to convert from RPN to a BOMDAS format.
+
+
+### References
+1. https://racket-lang.org/
+2. https://cs.stackexchange.com/questions/4666/what-is-the-significance-of-reverse-polish-notation
+3. https://groups.csail.mit.edu/mac/projects/scheme/
