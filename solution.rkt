@@ -153,24 +153,11 @@
 (define (twoList l)
 (remove-duplicates(cartesian-product allOps (allNums l))))
 
+;TESTING METHODS
 ;(remove-duplicates ((cartesian-product allOps (allNums (list 1 2 3 4 5 6)))))
 
 ;using list of same to reduce size
 ;(remove-duplicates (cartesian-product allOps (allNums '(1 1 1 1 1 1))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ;Passes a list of lists comtaining numbers and operators ('( + - * / -) '(1 2 3 4 5 6)  ('( + - * / -) '(1 2 3 4 5 6))) to a function
 (define (applyRpnToList numOpsList)
@@ -193,11 +180,78 @@
   (if(= (car rpnPattern) 1) ;if pattern if 1 its a number else its an operator
      (applyListToPattern (cdr numList) opList (cdr rpnPattern) (append rpnList (cons(car numList)'()))) ;take one of numList
      (applyListToPattern numList (cdr opList) (cdr rpnPattern) (append rpnList (cons(car opList)'())))) ;take one of opsList
-  ))
+))
+
+;return last element from a list - adapted from http://stackoverflow.com/questions/13175152/scheme-getting-last-element-in-list
+(define (last_element l)
+  (cond ((null? (cdr l)) (car l))
+        (else (last_element (cdr l)))))
+
+;Returns second last element from list
+(define (secLast_element l)
+  (car(cdr(reverse l))))
+
+;reverses order of list - adapted from http://stackoverflow.com/questions/4092113/how-to-reverse-a-list
+(define (reverseLst l)
+  (if (null? l)'()(append (reverseLst (cdr l)) (list (car l)))))
+
+;removes last two elements off list
+(define (removeLastTwoElement l)
+  ;reverses list removes top two elements and re-reverses it back
+  (reverseLst(cdr(cdr(reverseLst l)))))
+
+;namespace to allow eval to work
+(define ns (make-base-namespace))
+
+;evaluates a list
+(define (performOp operList)
+(eval operList ns))
+
+;combines 3 (op and 2 nums into list)
+(define (makeList op num1 num2)
+  (performOp(list op num1 num2)))
+
+;Calculates the rpn from a given rpn list - returns a number 
+(define (evalRpn rpnLst stack)
+  (if (null? rpnLst)
+      (if(= (length stack) 1) (car stack) "RPN list empty");if one number left on stack return stack
+      
+       ;Check if number or operator
+      (if (number? (car rpnLst))
+          (evalRpn (cdr rpnLst)(append stack (list(car rpnLst))));Operator add one to stack
+
+          (if (< (- (length stack) 1) 1);if length(stack - 1) is less than 1
+           "Invalid List" ;Invalid RPN
+
+           ;operator pull two nums from stack, apply operator and add to stack
+           ;add whats left on stack - stack with last 2 elements removed
+           (evalRpn (cdr rpnLst)(append (removeLastTwoElement stack) (list(makeList (car rpnLst)(last_element stack)(secLast_element stack)))))))))
 
 
-;TEST DATA
-(define lnumList '(2 2 2 2 2 2))
+;Test RPN Evaluator
+;pass in single rpn to be evaluated
+;(evalRpn (car(car(applyRpnToList (twoList lnumList)))) '() )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;TEST DATA FOR INDIVIDUAL METHODS
+;(define lnumList '(2 2 2 2 2 2))
 
 ;(define lopList '( + - * / -))
 
@@ -206,22 +260,3 @@
 
 ;makes a list of rpn statements from a given patternlist, number and operator list
 ;(applyRPN lnumList lopList validRPNPatternList)
-
-
-
-; first list off list of lists
-;(car(applyRpnToList (twoList lnumList)))
-
-;list of lists
-;(applyRpnToList (twoList lnumList))
-
-
-
-
-
-
-
-
-
-
-
