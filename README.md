@@ -4,6 +4,9 @@ Fourth Year Project For Theory of Algorithms Module
 #### Author: 
 Martin Coleman
 
+#### Wiki:
+https://github.com/Martinc94/CountdownNumbersGame/wiki
+
 ### Summary of Problem:
 Write a racket script that contains a function that accepts two arguments:
 
@@ -11,10 +14,17 @@ Write a racket script that contains a function that accepts two arguments:
 
 2- A list of six random numbers
 
-The function must return a combonation of the given numbers and the operators that compute the target number if possible.
+The function must return a combination of the given numbers and the operators that compute the target number if possible.
 
 All Six numbers dont have to be used in calculation.
 No negative numbers and fractions.
+
+### Countdown 
+Countdown is a Television game show broadcast of Channel 4. It contains a variety of word and number games. The countdown numbers game requires contestants to compute a list of six number to a given target within sixty seconds. The contestant with the correct solution of nearest solution to the target wins.
+
+Example of the game being played:
+
+https://www.youtube.com/watch?v=pfa3MHLLSWI
 
 ### Racket
 Racket is a functional programming language.It is a it was heavily infulenced by Lisp and Scheme.
