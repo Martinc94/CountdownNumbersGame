@@ -17,6 +17,7 @@ Write a racket script that contains a function that accepts two arguments:
 The function must return a combination of the given numbers and the operators that compute the target number if possible.
 
 All Six numbers dont have to be used in calculation.
+
 No negative numbers and fractions.
 
 ### Countdown 
@@ -27,7 +28,7 @@ Example of the game being played:
 https://www.youtube.com/watch?v=pfa3MHLLSWI
 
 ### Racket
-Racket is a functional programming language.It is a it was heavily infulenced by Lisp and Scheme.
+Racket is a functional programming language. It was heavily infulenced by Lisp and Scheme.
 It works mainly with lists and recursion. More information on racket is available here: https://racket-lang.org/
 
 ### Reverse Polish Notation
@@ -44,6 +45,7 @@ It works well with computers as it resembles a stack. Computers can read RPN wit
 4- Run using run button or CTRL+R
 
 5- Use solvecount method and params
+
 Example: (solvecount 120 (list 100 6 5 5 2 2))
 
 solvecount is the method name.
@@ -84,7 +86,6 @@ Once I had gained an unstanding of Racket and had wrote on paper in small steps 
 A small adjustment to the script would allow that all the solutions could be mapped and returned instead of printing the first correct method.
 
 The script currently returns results in Reverse polish notation, another method could be used to to convert from RPN to a BOMDAS format.
-
 
 ### References
 1. https://racket-lang.org/
